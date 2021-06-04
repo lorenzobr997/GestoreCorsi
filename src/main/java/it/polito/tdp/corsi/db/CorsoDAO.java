@@ -72,5 +72,34 @@ public class CorsoDAO {
 		}
 		return res;
 	}
+
+	public boolean esisteCorso(Corso corso) {
+		String sql = "SELECT * FROM corso WHERE codins = ?";
+		
+		try {
+			Connection con = DBConnect.getConnection();
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, corso.getCodins());
+			ResultSet rs = st.executeQuery();
+			if(rs.next()) {
+				
+				rs.close();
+				st.close();
+				con.close();
+				
+				return true;
+			}else {
+				
+				rs.close();
+				st.close();
+				con.close();
+				
+				return false;
+			}
+			
+		}catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
 
